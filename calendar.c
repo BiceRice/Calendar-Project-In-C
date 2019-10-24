@@ -7,7 +7,7 @@
 #define TWO 2
 #define MAX 63
 #define DAYSOFWEEK 7
-#define NINE 9
+#define TEN 10
 
 void printTilda(int total)
 {
@@ -63,7 +63,7 @@ int main()
 				printf(" %d", days);
 			}else
 			{
-			if(days == NINE)
+			if(days == TEN)
 			{
 				printf("%11d", days);
 			}else
