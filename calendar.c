@@ -1,4 +1,3 @@
-//create a calendar based on the user input at a given year
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +7,17 @@
 #define MAX 63
 #define DAYSOFWEEK 7
 #define TEN 10
+#define FOURHUNDRED 400
+#define ONEHUNDRED 100
+#define FOUR 4
+
+int calculateDayZero(int year)
+{
+	int result;
+	result = (((year - 1) * 365) + ((year - 1) / 4) - ((year - 1) / 100) +
+	((year) / 400) + 1) % 7;
+	return result;
+}
 
 void printTilda(int total)
 {
@@ -19,22 +29,45 @@ void printTilda(int total)
 
 int main()
 {
-	char *months[] = {" ", "Janurary", "Feburary", "March", "April", "June",
+	//the first box in the array is empty or 0 to make it easier
+	//to calculate the months since array index starts with 0
+	//and Janurary numeric notation is 1
+	char *months[] = {" ", "Janurary", "Feburary", "March", "April", "May","June",
 	"July", "August", "September", "October", "Novemeber", "Decemeber"};
 	char *days[] = {" ", "Sun", "Mon", "Tue", "Wed", "Thu","Fri", "Sat"};
   int DaysOfMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 	printf("Enter a year you wish to view the calendar for: ");
-	int User_Year;
-	scanf("%d", &User_Year);
-	printf("The year you enter is: %d\n", User_Year);
+	int Year;
+	scanf("%d", &Year);
+
+	while (Year < 0)
+	{
+		printf("Please enter a year that is not negatvie");
+		scanf("%d", &Year);
+	}
+
+	printf("The year you enter is: %d\n", Year);
+
+	if((Year % FOURHUNDRED == 0 && Year % 100 == 0) || Year % FOUR == 0)
+	{
+		printf("Yes it is a leap year.\n");
+		DaysOfMonth[TWO] = DaysOfMonth[TWO] + 1;
+	}else
+	{
+		printf("No it is not a leap year.\n")
+	}
+
+	int startDayOfWeek = calculateDayZero(Year);
 
 	for(int month = 1; month < 12; month++)
 	{
 		int firsthalf, secondhalf;
-		//totale atilda characaters is 62
 		int length = strlen(months[month]);
 		int total = MAX - length;
+		int startingDay;
 
+		//to make the calendar look even when displayed
 		if(total % TWO != 0 )
 		{
 			firsthalf = (total / 2) + 1;
@@ -50,19 +83,35 @@ int main()
 		printTilda(secondhalf);
 		printf("\n");
 
+		//To make the spacing of numbers be under the days of the week
 		for(int day = 1; day <=7; day++)
 		{
 			printf("%s       ", days[day]);
 		}
+
 		printf("\n");
+
+		for(startingDay = 0; startingDay < startDayOfWeek; startingDay++)
+		{
+			if(startingDay == 0)
+			{
+				printf("  ");
+			}else
+			{
+			printf("          ");
+		  }
+		}
 
 		for(int days = 1; days <= DaysOfMonth[month]; days++)
 		{
-			if(days % DAYSOFWEEK == 1)
+			if(startDayOfWeek == 0)
 			{
 				printf(" %d", days);
+				startDayOfWeek++;
 			}else
 			{
+			//for special case of when the number transfer from
+			//single digit to double digit
 			if(days == TEN)
 			{
 				printf("%11d", days);
@@ -70,11 +119,14 @@ int main()
 			{
 			printf("%10d", days);
 		  }
+			startDayOfWeek++;
 			}
-			if(days% DAYSOFWEEK == 0)
+			if(startDayOfWeek == DAYSOFWEEK)
 			{
 				printf("\n");
+				startDayOfWeek = 0;
 			}
+			startingDay = startDayOfWeek;
 		}
 		printf("\n");
 	}
