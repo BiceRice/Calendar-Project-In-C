@@ -9,4 +9,6 @@ The formula to calculate leap year was not created by me, instead I
 used this website:
 https://www.timeanddate.com/date/leapyear.html
 
-Will try to implement to redirect the output to a text file 
+The formula to calculte the day zero of a given year:
+https://stackoverflow.com/questions/478694/what-is-the-easiest-algorithm-to-find-the-day-of-week-of-day-zero-of-a-given-yea
+
