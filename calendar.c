@@ -41,6 +41,7 @@ int main()
 	int Year;
 	scanf("%d", &Year);
 
+	//For edge cases of user inputting negative numbers 
 	while (Year < 0)
 	{
 		printf("Please enter a year that is not negatvie");
@@ -91,6 +92,7 @@ int main()
 
 		printf("\n");
 
+		//print the the starting day based on the previous month
 		for(startingDay = 0; startingDay < startDayOfWeek; startingDay++)
 		{
 			if(startingDay == 0)
@@ -104,6 +106,7 @@ int main()
 
 		for(int days = 1; days <= DaysOfMonth[month]; days++)
 		{
+			//to print out the days for Sunday
 			if(startDayOfWeek == 0)
 			{
 				printf(" %d", days);
@@ -119,13 +122,16 @@ int main()
 			{
 			printf("%10d", days);
 		  }
+			//to keep track which day of the week is it
 			startDayOfWeek++;
 			}
+			//reset the counter to keep trakc which day of the week
 			if(startDayOfWeek == DAYSOFWEEK)
 			{
 				printf("\n");
 				startDayOfWeek = 0;
 			}
+			//set up the next month starting day of the week
 			startingDay = startDayOfWeek;
 		}
 		printf("\n");
